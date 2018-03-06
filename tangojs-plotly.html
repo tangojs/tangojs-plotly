@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<script src="bower_components/plotly.js/dist/plotly.js"></script>
+<link rel="import" href="../plotly-plot/plotly-plot.html">
+
+<script src="node_modules/tangojs-web-components/dist/tangojs-web-components.js"></script>
+
+<dom-module id="tangojs-plotly">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <plotly-plot id="fifth-plot"
+      data="[[formatData(value)]]"
+      layout="[[formatLayout(info)]]"
+    >
+    </plotly-plot>
+
+  </template>
+
+  <script>
+    /**
+     * `tangojs-plotly`
+     * TangoJS Plotly
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TangojsPlotly extends tangojs.web.util.mixins.withTangoAttribute(Polymer.Element) {
+      static get is() { return 'tangojs-plotly'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'tangojs-plotly'
+          }
+        };
+      }
+
+      formatData(value){
+        console.log(value)
+        return [
+            {
+              "z":     value,
+
+              "connectgaps": true,
+              "type": "heatmap",
+              "hoverinfo": "none",
+              "colorscale": "Viridis"
+
+            }
+          ]
+      }
+
+      formatLayout(info){
+        return { 
+          "title": info.label,
+          "legend": {
+            "x": 0
+            },
+          "hovermode": "closest",
+          "margin": { "b":0 }
+        }
+      }
+    }
+
+    window.customElements.define(TangojsPlotly.is, TangojsPlotly);
+  </script>
+</dom-module>
